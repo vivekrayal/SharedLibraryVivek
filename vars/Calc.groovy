@@ -1,5 +1,6 @@
 def add(x,y){
-  echo "addition of $x and $y is ${x+y}"
+  c= $x + $y
+  echo "addition of $x and $y is $c"
 }
 
 def sub(x,y)
