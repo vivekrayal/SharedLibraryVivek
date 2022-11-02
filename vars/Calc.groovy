@@ -4,3 +4,8 @@ def add(x,y){
   echo "addition of ${x} and ${y} is ${x+y}"
 }
 
+def checkadd(x,y)
+{
+echo "values are $x n $y"
+}
+
