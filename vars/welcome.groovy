@@ -1,5 +1,5 @@
-def call(name,a,b)
+def call(name)
 {
   echo "Hey , ${name} , Welcome to Morning Session"
-  echo "addition is ${${a}+${b}}"
+ 
  }
