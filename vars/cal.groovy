@@ -13,8 +13,8 @@ def teamName(){
 
 }
 
-def checkout(branch,url)
+def checkout()
 {
-  checkout([$class: 'GitSCM', branches: [[name: "*/{$branch}"]], extensions: [], userRemoteConfigs: [[url: "{$url}"]]])
+  checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vivekrayal/SharedLibraryVivek.git']]])
       
 }
