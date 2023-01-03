@@ -12,3 +12,9 @@ def teamName(){
   echo "This is SnatakF4"
 
 }
+
+def checkout(branch,url)
+{
+  checkout([$class: 'GitSCM', branches: [[name: "*/{$branch}"]], extensions: [], userRemoteConfigs: [[url: "{$url}"]]])
+      
+}
