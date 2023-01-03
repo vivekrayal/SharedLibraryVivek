@@ -18,3 +18,11 @@ def checkoutRepo()
   checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vivekrayal/SharedLibraryVivek.git']]])
       
 }
+
+def checkTest(Map stepParams){
+echo "chceking the Test"
+  REPO_BRANCH="${stepParams.REPO_BRANCH}"
+    REPO_URL="${stepParams.REPO_URL}"
+echo "url passed is $REPO_URL"
+echo "branch is $REPO_BRANCH"  
+}
