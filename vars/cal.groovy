@@ -26,5 +26,5 @@ echo "chceking the Test"
     REPO_URL="${stepParams.REPO_URL}"
 echo "url passed is $REPO_URL"
 echo "branch is $REPO_BRANCH"
-checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${REPO_URL}"]]])  
+  checkout([$class: 'GitSCM', branches: [[name: '*/"${REPO_BRANCH}"']], extensions: [], userRemoteConfigs: [[url: "${REPO_URL}"]]])  
 }
