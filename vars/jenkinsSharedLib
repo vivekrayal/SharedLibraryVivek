@@ -1,0 +1,80 @@
+def call()
+{
+  echo "Hey , We are using shared Lib for jenkins "
+ 
+pipeline {
+    agent any
+    tools {
+       terraform 'terraform'
+    }
+    stages {
+        stage('Git checkout') {
+           steps{
+                git branch: 'main', credentialsId: 'Github', url: 'https://github.com/abhilashtatran/iaac-ci-check.git'
+            }
+        }
+        stage('Dependency-check') {
+            steps{
+                dependencyCheck additionalArguments: '', odcInstallation: 'dependency-check'
+                dependencyCheckPublisher pattern: ''
+            }
+        }
+        stage('terraform format check') {
+            steps{
+                sh 'terraform fmt'
+            }
+        }
+        // stage('linting') {
+        //     steps{
+        //         sh 'tflint --init'
+        //         sh 'tflint'
+        //     }
+        // }
+        stage('terraform Init') {
+            steps{
+                sh 'terraform init'
+            }
+        }
+        stage('terraform validate') {
+            steps {
+                sh 'terraform validate'
+            }
+        }
+        stage('terraform plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+        stage('terraform action') {
+            input {
+            message "Do you want to ${action}"
+            ok 'yes'
+            submitter 'vivek' 
+            submitterParameter 'name'
+            }
+            steps{
+                echo "terraform action is ${action}"
+                sh ('terraform ${action} --auto-approve')
+            }
+        }
+    }
+    
+    post {
+            
+            always
+            {
+                
+            //     slackSend channel: 'slacknotification' , message: "Please find status of pipeline ${env.JOB_NAME} ${env.BUILD_NUMBER} ${env.BUILD_URL}" 
+            
+                slackSend channel: 'slack_notifications_snatak', message: "Please find status of pipeline ${env.JOB_NAME} ${env.BUILD_NUMBER} ${env.BUILD_URL}" 
+                 
+            }
+            
+            failure
+            {
+              slackSend channel: 'slack_notifications_snatak', message: "pipeline failed for  ${env.JOB_NAME} Build No- ${env.BUILD_NUMBER} url :${env.BUILD_URL}" 
+                   
+            }
+        }
+    }
+   } 
